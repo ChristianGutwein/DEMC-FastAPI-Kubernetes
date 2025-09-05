@@ -31,16 +31,15 @@ source venv/bin/activate
 3. Install all relevant python packages from requirements.txt file: 
 ```sh
 pip install -r requirements.txt (pip install)
-```  
-
-4. Verify successful installation of dependencies by executing the following commands:
-Display package dependency graph:
-   ```sh
-   pipenv graph
 ```
 
+4. Verify successful installation of dependencies by checking installed lib packages in venv folder
+
 5. Start FastAPI App/Service by starting the uvicorn server
+```sh
 uvicorn app.main:app --reload
+```  
+
 
 
 ## Further (optional) VSCode Plugins
