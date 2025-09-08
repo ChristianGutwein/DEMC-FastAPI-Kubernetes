@@ -1,10 +1,9 @@
-from fastapi import FastAPI, Depends, Query
-from typing import List, Optional
+from fastapi import HTTPException
+from typing import  Optional
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.models.data_table_objects import TaxiZone
-
 
 
 def list_zones(
@@ -14,6 +13,19 @@ def list_zones(
     service_zone: Optional[str],
     session: Session
 ):
+    
+    # require at least one filter
+    if not any([
+        location_id is not None,
+        bool(borough),
+        bool(zone),
+        bool(service_zone),
+    ]):
+        raise HTTPException(
+            status_code=400,
+            detail="Provide at least one filter. Following filters are possible: location_id, borough, zone, service_zone",
+        )
+
     stmt = select(TaxiZone)
     if location_id is not None:
         stmt = stmt.where(TaxiZone.LocationID == location_id)

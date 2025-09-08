@@ -1,6 +1,9 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, Session
+from sqlalchemy.engine import Engine
 from functools import lru_cache
+from typing import Generator
+
 from app.core.config import get_settings
 
 
@@ -41,3 +44,9 @@ def get_session(schema: str) -> Generator[Session, None, None]:
         yield db
     finally:
         db.close()
+
+
+def session_for(schema: str):
+    def _dep() -> Generator[Session, None, None]:
+        yield from get_session(schema)
+    return _dep
