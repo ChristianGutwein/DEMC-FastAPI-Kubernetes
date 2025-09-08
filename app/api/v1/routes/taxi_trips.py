@@ -26,6 +26,10 @@ def get_trip(uuid: str):
 def list_trips(limit: int = 10):
     return taxi_data_handler.list_trips(limit)
 
+# @router.get("/paginated_list", response_model=List[TaxiTripResponse])
+# def list_trips(limit: int = 10):
+#     return taxi_data_handler.list_trips(limit)
+
 @router.put("/{uuid}", response_model=TaxiTripResponse)
 def update_trip(uuid: str, trip: TaxiTripUpdateRequest):
     updated = taxi_data_handler.update_trip(uuid, trip)

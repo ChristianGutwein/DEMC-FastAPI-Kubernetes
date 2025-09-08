@@ -4,8 +4,10 @@ from app.db.databricks_connector import fetch_all, fetch_one, execute
 from app.schemas.schemas import TaxiTripCreateRequest, TaxiTripUpdateRequest
 
 
-S = get_settings()
-TABLE_NYC_TAXI = f"{S.DATABRICKS_CATALOG}.{S.DATABRICKS_SILVER_SCHEMA}.{S.DATABRICKS_TAXI_TABLE}"
+_settings = get_settings()
+TABLE_NYC_TAXI = f"{_settings.DATABRICKS_CATALOG}.{_settings.DATABRICKS_SILVER_SCHEMA}.{_settings.DATABRICKS_TAXI_TABLE}"
+
+#todo: add pagination endpoint and add sql model variant!
 
 def create_trip(trip: TaxiTripCreateRequest) -> dict:
     fields = trip.dict()

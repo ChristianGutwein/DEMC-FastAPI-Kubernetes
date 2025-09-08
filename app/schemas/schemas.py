@@ -1,6 +1,7 @@
 from pydantic import BaseModel, ConfigDict
 from typing import Optional
 from datetime import datetime
+from decimal import Decimal
 
 
 # ---------- CREATE ----------
@@ -85,4 +86,19 @@ class TaxiZoneResponse(BaseModel):
     Zone: str
     service_zone: str
 
+    model_config = ConfigDict(from_attributes=True)
+
+
+
+class HourlyMetricResponse(BaseModel):
+    hour_of_day: int
+    total_trips: int
+    total_revenue: float
+    avg_fare: float
+    avg_distance: float
+    avg_duration: float
+    avg_tip_percentage: Decimal
+    peak_status: str
+    day_type: str
+    computation_timestamp: datetime
     model_config = ConfigDict(from_attributes=True)

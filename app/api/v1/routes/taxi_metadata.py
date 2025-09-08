@@ -16,7 +16,6 @@ SCHEMA = _settings.DATABRICKS_BRONZE_SCHEMA
 router = APIRouter(prefix="/metadata", tags=["Taxi Trip Metadata"])
 
 
-
 @router.get("/taxi_zones",
     response_model=List[TaxiZoneResponse],
     summary="Query taxi zones")
