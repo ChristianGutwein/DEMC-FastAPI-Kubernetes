@@ -19,10 +19,16 @@ class Settings(BaseSettings):
     DATABRICKS_HTTP_PATH: str
     DATABRICKS_ACCESS_TOKEN: str
 
-
     DATABRICKS_CATALOG: str = Field(default="mhpdeworkshop_databricks")
-    DATABRICKS_SCHEMA: str = Field(default="00_juewei_silver")
-    DATABRICKS_TABLE: str = Field(default="nyc_taxi_enriched")
+
+    DATABRICKS_GOLD_SCHEMA: str
+    DATABRICKS_TAXI_TRIPS_BY_HOUR: str
+
+    DATABRICKS_SILVER_SCHEMA: str
+    DATABRICKS_TAXI_TABLE: str
+
+    DATABRICKS_BRONZE_SCHEMA: str
+    DATABRICKS_TAXI_ZONE_LOOKUP_TABLE: str
 
 
 @lru_cache

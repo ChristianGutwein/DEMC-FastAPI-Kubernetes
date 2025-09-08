@@ -1,28 +1,37 @@
 from databricks import sql
-#from app.core.config import get_settings
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
-#_settings = get_settings()
 
-# Replace with your Databricks connection details
-#DATABRICKS_SERVER_HOSTNAME = _settings.DATABRICKS_SERVER_HOSTNAME
-#HTTP_PATH = _settings.DATABRICKS_HTTP_PATH
-#ACCESS_TOKEN = _settings.DATABRICKS_ACCESS_TOKEN
+def test_db_connection():
+    try:
+        # Establish connection
+        with sql.connect(
+            server_hostname=os.getenv("DATABRICKS_SERVER_HOSTNAME"),
+            http_path=os.getenv("DATABRICKS_HTTP_PATH"),
+            access_token=os.getenv("DATABRICKS_ACCESS_TOKEN")
+        ) as connection:
 
-try:
-    # Establish connection
-    with sql.connect(
-        server_hostname="",
-        http_path="",
-        access_token=""
-    ) as connection:
+            print("Connection established successfully!")
 
-        print("Connection established successfully!")
+            # Execute a simple test query
+            query = f"""
+                SELECT *    
+                FROM mhpdeworkshop_databricks.00_christian_silver.nyc_taxi_enriched
+                ORDER BY pickup_datetime DESC
+                LIMIT 10
+            """
 
-        # Execute a simple test query
-        with connection.cursor() as cursor:
-            cursor.execute("SELECT current_user(), current_date()")
-            result = cursor.fetchall()
-            print("Query Result:", result)
+            with connection.cursor() as cursor:
+                cursor.execute(query)
+                result = cursor.fetchall()
+                print("Query Result:")
+                for row in result:
+                    print(row)
 
-except Exception as e:
-    print("Error connecting to Databricks:", e)
+    except Exception as e:
+        print("Error connecting to Databricks:", e)
+
+if __name__ == "__main__":
+    test_db_connection()    
