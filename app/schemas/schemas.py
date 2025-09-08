@@ -1,12 +1,13 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from typing import Optional
 from datetime import datetime
+
 
 # ---------- CREATE ----------
 class TaxiTripCreateRequest(BaseModel):
     passenger_count: Optional[int]
     trip_distance: Optional[float]
-    store_and_fwd_flag: Optional[str]    # original string column
+    store_and_fwd_flag: Optional[str]
     payment_type: Optional[int]
     fare_amount: Optional[float]
     extra: Optional[float]
@@ -23,7 +24,7 @@ class TaxiTripCreateRequest(BaseModel):
     rate_code_id: Optional[int]
     pickup_location_id: Optional[int]
     dropoff_location_id: Optional[int]
-    store_and_forward: Optional[bool]    # new boolean field
+    store_and_forward: Optional[bool]
 
 
 # ---------- UPDATE ----------
@@ -75,3 +76,13 @@ class TaxiTripResponse(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+
+class TaxiZoneResponse(BaseModel):
+    LocationID: int
+    Borough: str
+    Zone: str
+    service_zone: str
+
+    model_config = ConfigDict(from_attributes=True)

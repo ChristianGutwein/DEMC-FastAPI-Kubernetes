@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from typing import List
-from app.models.schemas import (
+from app.schemas.schemas import (
     TaxiTripCreateRequest,
     TaxiTripUpdateRequest,
     TaxiTripResponse,

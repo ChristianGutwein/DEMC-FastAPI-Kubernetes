@@ -2,13 +2,9 @@ from contextlib import contextmanager
 from typing import Generator, Optional, Any, Iterable
 from databricks import sql
 from loguru import logger
-
-
 from app.core.config import get_settings
 
-
 _settings = get_settings()
-
 
 @contextmanager
 def dbx_conn() -> Generator[Any, None, None]:

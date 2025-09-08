@@ -1,7 +1,7 @@
 from app.core.config import get_settings
 from typing import Optional
-from app.db.databricks import fetch_all, fetch_one, execute
-from app.models.schemas import TaxiTripCreateRequest, TaxiTripUpdateRequest
+from app.db.databricks_connector import fetch_all, fetch_one, execute
+from app.schemas.schemas import TaxiTripCreateRequest, TaxiTripUpdateRequest
 
 
 S = get_settings()
