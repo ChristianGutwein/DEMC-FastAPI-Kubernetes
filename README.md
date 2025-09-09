@@ -6,11 +6,11 @@ This is the repo for our Data Engineering Master Class - FastAPI &amp; Kubernete
 
 We use a very standard python setup, combining venv and pip. 
 
-Python Version: >3.9 & <3.13
+Python Version: 3.10
 
 ⚠️ **MHP VPN Connection Required for Service Operation** ⚠️
 
-⚠️ Prerequisite: Python and pip are already installed on your local machine.⚠️ 
+⚠️ Prerequisite: Python 3.10 and pip are already installed on your local machine.⚠️ 
 
 
 ## Following steps are necessary:

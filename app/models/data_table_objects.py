@@ -13,9 +13,6 @@ class TaxiZone(Base):
     service_zone: Mapped[str] = mapped_column(String(100), index=True, nullable=False)
 
 
-
-
-
 class HourlyMetric(Base):
     __tablename__ = "kpi_trips_by_hour"  
     hour_of_day: Mapped[int] = mapped_column(Integer, primary_key=True)

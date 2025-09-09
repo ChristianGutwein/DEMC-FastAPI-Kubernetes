@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from typing import List
 from app.schemas.schemas import (
     TaxiTripCreateRequest,
@@ -6,9 +6,12 @@ from app.schemas.schemas import (
     TaxiTripResponse,
 )
 from app.services import taxi_trips as taxi_data_handler
+from app.core.security import get_api_key
 
 
 router = APIRouter(prefix="/trips", tags=["Taxi Trips"])
+
+#todo: add pagination endpoint using ORM Model and filter options!
 
 
 @router.post("/", response_model=TaxiTripResponse)
@@ -23,7 +26,7 @@ def get_trip(uuid: str):
     return trip
 
 @router.get("/", response_model=List[TaxiTripResponse])
-def list_trips(limit: int = 10):
+def list_trips(limit: int = 10, api_key: str = Depends(get_api_key)):
     return taxi_data_handler.list_trips(limit)
 
 # @router.get("/paginated_list", response_model=List[TaxiTripResponse])
