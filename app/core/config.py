@@ -13,6 +13,7 @@ class Settings(BaseSettings):
     APP_HOST: str = Field(default="0.0.0.0")
     APP_PORT: int = Field(default=8000)
 
+    VERIFY_API_TOKEN: str
 
     # Databricks
     DATABRICKS_SERVER_HOSTNAME: str
