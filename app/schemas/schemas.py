@@ -54,6 +54,7 @@ class TaxiTripUpdateRequest(BaseModel):
 
 # ---------- RESPONSE ----------
 class TaxiTripResponse(BaseModel):
+    uuid: Optional[str]
     passenger_count: Optional[int]
     trip_distance: Optional[float]
     store_and_fwd_flag: Optional[str]
@@ -75,8 +76,7 @@ class TaxiTripResponse(BaseModel):
     dropoff_location_id: Optional[int]
     store_and_forward: Optional[bool]
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 
@@ -101,4 +101,5 @@ class HourlyMetricResponse(BaseModel):
     peak_status: str
     day_type: str
     computation_timestamp: datetime
+    
     model_config = ConfigDict(from_attributes=True)
