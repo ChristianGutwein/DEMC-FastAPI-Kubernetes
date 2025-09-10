@@ -26,13 +26,23 @@ class TaxiTripCreateRequest(BaseModel):
     pickup_location_id: Optional[int]
     dropoff_location_id: Optional[int]
     store_and_forward: Optional[bool]
+    trip_duration: Optional[float]
+    fare_per_mile: Optional[float]
+    tip_percentage: Optional[float]
+    pickup_hour: Optional[int]
+    pickup_day: Optional[int]
+    pickup_month: Optional[int]
+    is_weekend: Optional[int]
+    is_peak_hour: Optional[int]
+    payment_type_desc: Optional[str]
+    rate_code_desc: Optional[str]
+    avg_speed: Optional[float]
 
-
+    
 # ---------- UPDATE ----------
 class TaxiTripUpdateRequest(BaseModel):
     passenger_count: Optional[int]
     trip_distance: Optional[float]
-    store_and_fwd_flag: Optional[str]
     payment_type: Optional[int]
     fare_amount: Optional[float]
     extra: Optional[float]
@@ -50,6 +60,17 @@ class TaxiTripUpdateRequest(BaseModel):
     pickup_location_id: Optional[int]
     dropoff_location_id: Optional[int]
     store_and_forward: Optional[bool]
+    trip_duration: Optional[float]
+    fare_per_mile: Optional[float]
+    tip_percentage: Optional[float]
+    pickup_hour: Optional[int]
+    pickup_day: Optional[int]
+    pickup_month: Optional[int]
+    is_weekend: Optional[int]
+    is_peak_hour: Optional[int]
+    payment_type_desc: Optional[str]
+    rate_code_desc: Optional[str]
+
 
 
 # ---------- RESPONSE ----------
@@ -75,6 +96,17 @@ class TaxiTripResponse(BaseModel):
     pickup_location_id: Optional[int]
     dropoff_location_id: Optional[int]
     store_and_forward: Optional[bool]
+    trip_duration: Optional[float]
+    fare_per_mile: Optional[float]
+    tip_percentage: Optional[float]
+    pickup_hour: Optional[int]
+    pickup_day: Optional[int]
+    pickup_month: Optional[int]
+    is_weekend: Optional[int]
+    is_peak_hour: Optional[int]
+    payment_type_desc: Optional[str]
+    rate_code_desc: Optional[str]
+    avg_speed: Optional[float]
 
     model_config = ConfigDict(from_attributes=True)
 
@@ -101,5 +133,5 @@ class HourlyMetricResponse(BaseModel):
     peak_status: str
     day_type: str
     computation_timestamp: datetime
-    
+
     model_config = ConfigDict(from_attributes=True)
