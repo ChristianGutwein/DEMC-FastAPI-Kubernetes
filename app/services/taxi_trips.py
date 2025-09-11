@@ -1,6 +1,10 @@
+from fastapi import HTTPException
 from app.core.config import get_settings
 from typing import Optional
 from app.db.databricks_connector import fetch_all, fetch_one, execute
+from sqlalchemy import select
+from sqlalchemy.orm import Session
+from app.models.data_table_objects import Trip
 from app.schemas.schemas import TaxiTripCreateRequest, TaxiTripUpdateRequest
 
 
@@ -10,7 +14,7 @@ TABLE_NYC_TAXI = f"{_settings.DATABRICKS_CATALOG}.{_settings.DATABRICKS_SILVER_S
 #todo: add pagination endpoint and add sql model variant!
 
 def create_trip(trip: TaxiTripCreateRequest) -> dict:
-    fields = trip.dict()
+    fields = trip.model_dump()
     query = f"""
         INSERT INTO {TABLE_NYC_TAXI} ({", ".join(fields.keys())})
         VALUES ({", ".join(["?"] * len(fields))})
@@ -18,6 +22,18 @@ def create_trip(trip: TaxiTripCreateRequest) -> dict:
     execute(query, tuple(fields.values()))
     # return the created row for consistency
     return get_trip(trip.uuid)
+
+
+def create_trip_orm(trip: TaxiTripCreateRequest, session):
+    db_trip = Trip(**trip.model_dump())
+    session.add(db_trip)
+    try:
+        session.commit()
+    except Exception as e:
+        session.rollback()
+        raise HTTPException(status_code=400, detail=f"Error inserting trip: {e}")
+    session.refresh(db_trip)
+    return db_trip
 
 
 def get_trip(uuid: str) -> Optional[dict]:
@@ -30,8 +46,8 @@ def list_trips(limit: int = 10) -> list[dict]:
     return fetch_all(query)
 
 
-def update_trip(uuid: str, trip: TaxiTripUpdateRequest) -> Optional[dict]:
-    fields = {k: v for k, v in trip.dict().items() if v is not None}
+def update_trip(uuid: str, trip_update: TaxiTripUpdateRequest) -> Optional[dict]:
+    fields = {k: v for k, v in trip_update.dict().items() if v is not None}
     if not fields:
         return get_trip(uuid)  # nothing to update, return existing
 
@@ -43,6 +59,22 @@ def update_trip(uuid: str, trip: TaxiTripUpdateRequest) -> Optional[dict]:
     if rowcount == 0:
         return None
     return get_trip(uuid)
+
+
+def update_trip_orm(uuid: str, trip_update: TaxiTripUpdateRequest, session: Session) -> Optional[dict]:
+    trip = session.query(Trip).filter(Trip.uuid == uuid).first()
+    if not trip:
+        raise HTTPException(status_code=404, detail="Trip not found")
+
+    update_data = trip_update.dict(exclude_unset=True)
+    for key, value in update_data.items():
+        setattr(trip, key, value)
+
+    session.add(trip)
+    session.commit()
+    session.refresh(trip)
+
+    return {"message": "Trip updated successfully", "trip": trip}
 
 
 def delete_trip(uuid: str) -> bool:
@@ -69,7 +101,6 @@ def delete_trip(uuid: str) -> bool:
 #     [limit, offset],
 #     )
 #     return rows
-
 
 
 # def get_trip(trip_id: str) -> Optional[dict]:
