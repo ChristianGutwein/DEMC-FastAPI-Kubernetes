@@ -137,3 +137,13 @@ class HourlyMetricResponse(BaseModel):
     computation_timestamp: datetime
 
     model_config = ConfigDict(from_attributes=True)
+
+
+class GenericTaxiKPIsResponse(BaseModel):
+    total_trips: int
+    total_revenue: float
+    average_trip_distance: float
+    average_fare: float
+    average_tip: float
+
+    model_config = ConfigDict(from_attributes=True)
