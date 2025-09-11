@@ -3,7 +3,6 @@ from typing import List, Optional
 from app.schemas.schemas import TaxiZoneResponse
 from app.services import taxi_metadata as metadata_handler
 from sqlalchemy.orm import Session
-
 from app.db.databricks_engine import session_for
 
 from app.core.config import get_settings

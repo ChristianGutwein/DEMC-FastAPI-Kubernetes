@@ -1,6 +1,29 @@
 # DEMC-FastAPI-Kubernetes
 This is the repo for our Data Engineering Master Class - FastAPI &amp; Kubernetes
 
+# Environments
+- Virtual Machine (bevorzugt)
+- Local Setup
+
+
+## Following software tools are necessary (for VM):
+- Remote Desktop (for Windows User)
+- Windows App (for Mac users)
+- Github Account
+
+## Following software tools are necessary (for local setup):
+- Python 3.10
+- VSCode
+- VScode Plugins: Python Debugger & Python language support
+- Git 
+- Github Account
+- Zscaler Zugriffspaket (ZScaler-MHP-CS-Demo-90d) beantragen 
+- azure-cli: https://learn.microsoft.com/de-de/cli/azure/install-azure-cli?view=azure-cli-latest
+- helm: https://helm.sh/docs/helm/helm_install/
+- docker/podman: https://podman.io/ (Für Docker Desktop Nutzung ist ein MHP Docker Enterprise Account notwendig!)
+- kubectl: https://kubernetes.io/docs/tasks/tools/
+- Bruno (https://www.usebruno.com/) oder Postman
+
 
 # FastAPI Setup
 
@@ -11,6 +34,7 @@ Python Version: 3.10
 ⚠️ **MHP VPN Connection Required for Service Operation** ⚠️
 
 ⚠️ Prerequisite: Python 3.10 and pip are already installed on your local machine.⚠️ 
+
 
 
 ## Following steps are necessary:
